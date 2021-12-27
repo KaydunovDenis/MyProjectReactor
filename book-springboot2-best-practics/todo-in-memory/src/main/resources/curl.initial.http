@@ -1,0 +1,18 @@
+###initial data on ToDo DB
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 4,
+  "description": "content"
+}
+
+###initial data on ToDo DB
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 5,
+  "description": "content modify new without",
+  "created": "2020-12-27T11:47:59.12"
+}

@@ -1,0 +1,65 @@
+###initial data on ToDo DB
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 4,
+  "description": "content"
+}
+
+###initial data on ToDo DB
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 5,
+  "description": "content modify new without",
+  "created": "2020-12-27T11:47:59.12"
+}
+
+###1 проверка списка сущности ToDo, что лежит в хранилище сущности ToDo
+GET http://localhost:8080/api/todo
+
+###2 тест Head query
+HEAD http://localhost:8080/api/todo
+
+###3 object modification общая модификация объекта
+PUT http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 1,
+  "description": "Take the dog and the cat for a walk"
+}
+
+###4 object modification, отдельного фрагмента объекта ToDo c id=3
+PATCH http://localhost:8080/api/todo/3
+Content-Type: application/json
+
+{
+  "completed": "true"
+}
+
+###5 delete object
+DELETE http://localhost:8080/api/todo/3
+
+###6 check a validation on @NotBlank
+POST http://localhost:8080/api/todo
+Content-Type: application/json
+
+{
+  "id": 4,
+  "description": ""
+}
+
+###7 check a validation on @NotNull
+POST http://localhost:8080/api/todo
+
+###8 test SPEL in CLI
+### чтобы выполнить команду нужно сделать: cd target
+### java -jar todo-in-memory-0.0.1-SNAPSHOT.jar --port=8787
+### error -> Connection refused
+GET http://localhost:8080/api/todo
+### sucssec
+GET http://localhost:8787/api/todo
+
