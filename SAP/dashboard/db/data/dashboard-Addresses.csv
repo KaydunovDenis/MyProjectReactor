@@ -1,0 +1,5 @@
+AddressID,Country,City,Street,House,Apartment
+1,"Belarus","Gomel","Street1",12,1
+2,"Belarus","Minsk","Street2",34,2
+3,"Ukraine","Kiev","Street3",2,4
+4,"Belarus","Mogilev","Street4",1234,5
