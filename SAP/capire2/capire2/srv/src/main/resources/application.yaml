@@ -1,0 +1,21 @@
+---
+spring:
+  config.activate.on-profile: default
+cds:
+  datasource:
+    auto-config.enabled: false
+  security:
+    authenticate-unknown-endpoints: true
+    open-unrestricted-endpoints: true
+    open-metadata-endpoints: false
+    xsuaa:
+      enabled: true
+    mock:
+      enabled: false
+      users:
+        - name: admin
+          password: admin
+          roles:
+            - Admin
+        - name: user
+          password: user

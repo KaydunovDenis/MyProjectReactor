@@ -1,0 +1,28 @@
+{
+  "build": {
+    "target": "."
+  },
+  "cds": {
+    "auth": {
+      "passport": {
+        "strategy": "mock",
+        "users": {
+          "ottoowner": {
+            "ID": "ottoowner@mail.com",
+            "password": "123",
+            "roles": [
+              "owner_role"
+            ]
+          },
+          "uteuser": {
+            "ID": "uteuser@mail.com",
+            "password": "123"
+          }
+        }
+      }
+    }
+  },
+  "hana": {
+    "deploy-format": "hdbtable"
+  }
+}

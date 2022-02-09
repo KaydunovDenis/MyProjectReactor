@@ -1,0 +1,41 @@
+### Get all supliers -> 200
+GET http://localhost:4004
+
+### Get all supliers -> 401 Unauthorized
+GET http://localhost:4004/owner/Suppliers
+
+### get all addresses
+GET http://localhost:4004/customer/Addresses
+
+### get supplier with id=1
+GET http://localhost:4004/owner/Suppliers(1)
+
+### get supplier with id=1 with OData's function $expand
+GET http://localhost:4004/owner/Suppliers(1)?$expand=Address
+
+
+### Security
+### Unauthorized user
+### Get all supliers without role -> 200
+GET http://localhost:4004
+### Get all supliers without role -> 401 Unauthorized
+GET http://localhost:4004/owner/Suppliers
+### Get all supliers without role -> !!!!!!!  must be 401!!!!!
+GET http://localhost:4004/customer/Suppliers
+
+
+### Unauthorized user
+### Get all supliers with user role -> 403 Forbidden
+GET http://user:user@localhost:4004/owner/Suppliers
+### Get all supliers with user role -> 200
+GET http://user:user@localhost:4004/customer/Suppliers
+
+### Get all supliers with user role -> 403 Forbidden
+GET http://user:user@localhost:4004/owner/Suppliers
+### Get all supliers with user role -> 200
+GET http://user:user@localhost:4004/customer/Suppliers
+
+### Get all supliers with admin -> !!!!!!!!!
+GET http://admin:admin@localhost:4004/owner/Suppliers
+###1 Get all supliers with admin -> 200
+GET http://admin:admin@localhost:4004/customer/Suppliers
