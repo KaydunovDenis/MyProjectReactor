@@ -1,0 +1,30 @@
+{
+  "features": {
+    "[hybrid]": {
+      "emulate_vcap_services": true
+    }
+  },
+  "requires": {
+    "[hybrid]": {
+      "uaa": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.us10.hana.ondemand.com",
+          "org": "a1e37fd2trial",
+          "space": "dev",
+          "instance": "myxsuaaa",
+          "key": "myxsuaaa-key",
+          "vcap": {
+            "label": "xsuaa",
+            "plan": "application",
+            "tags": [
+              "xsuaa"
+            ]
+          },
+          "resolved": false
+        },
+        "kind": "xsuaa"
+      }
+    }
+  }
+}
