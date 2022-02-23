@@ -11,11 +11,11 @@ cds:
     xsuaa:
       enabled: true
     mock:
-      enabled: false
+      enabled: true
       users:
         - name: admin
           password: admin
-          roles:
-            - Admin
+          roles: admin
         - name: user
           password: user
+          roles: user

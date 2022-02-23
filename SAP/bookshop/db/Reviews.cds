@@ -1,7 +1,6 @@
 namespace my.bookshop;
 
 //?
-using {my.bookshop as bookshop} from './index';
 //instead of "key id: Integer;"
 //CAP will automatically generate a CUID and insert it
 //into this field whenever you create a new entity.
@@ -13,8 +12,8 @@ using {cuid, managed} from '@sap/cds/common';
 entity Reviews : cuid, managed {
     book   : Association to bookshop.Books;
     rating : Rating          @assert.range;
-    title  : String(100)     @mandatory;
-    text   : String(1000)    @mandatory;
+    title  : bookshop.Name   @mandatory;
+    text   : bookshop.Text   @mandatory;
 }
 
 type Rating : Integer enum {

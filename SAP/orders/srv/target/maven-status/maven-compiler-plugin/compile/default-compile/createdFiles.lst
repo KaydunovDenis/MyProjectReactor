@@ -1,0 +1,8 @@
+cds\gen\orders\Orders_.class
+cds\gen\orders\OrdersModel_.class
+cds\gen\orderservice\OrderService_.class
+cds\gen\orders\Orders.class
+cds\gen\orderservice\Order_.class
+customer\orders\Application.class
+customer\orders\handlers\OrderServiceHandler.class
+cds\gen\orderservice\Order.class

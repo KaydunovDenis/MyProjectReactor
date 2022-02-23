@@ -7,17 +7,17 @@ spring:
     driver-class-name: org.sqlite.JDBC
 server:
   port: 4004
-#cds:
+cds:
 #  datasource:
 #    auto-config.enabled: false
-#  remote.services:
-#      OrderService:
-#        destination:
-#          service: "OrderService"
-#          type: "odata-v4"
-#          suffix: "/odata/v4"
-#          properties:
-#            url: http://localhost:8082
+  remote.services:
+      OrderService:
+        destination:
+          service: "OrderService"
+          type: "odata-v4"
+          suffix: "/odata/v4"
+          properties:
+            url: http://localhost:8082
 #  security:
 #    authenticate-unknown-endpoints: true
 #    open-unrestricted-endpoints: true

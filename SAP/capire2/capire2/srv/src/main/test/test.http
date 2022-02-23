@@ -20,22 +20,21 @@ GET http://localhost:4004/owner/Suppliers(1)?$expand=Address
 GET http://localhost:4004
 ### Get all supliers without role -> 401 Unauthorized
 GET http://localhost:4004/owner/Suppliers
-### Get all supliers without role -> !!!!!!!  must be 401!!!!!
+### Get all supliers without role -> 401 Unauthorized
 GET http://localhost:4004/customer/Suppliers
 
-
-### Unauthorized user
+### Аuthorized user
+### Get all supliers without role -> 200
+GET http://user:user@localhost:4004
 ### Get all supliers with user role -> 403 Forbidden
 GET http://user:user@localhost:4004/owner/Suppliers
-### Get all supliers with user role -> 200
+### Get all supliers with user role -> 200 !!!!!!!!!!!!!!!!!!!
 GET http://user:user@localhost:4004/customer/Suppliers
 
-### Get all supliers with user role -> 403 Forbidden
-GET http://user:user@localhost:4004/owner/Suppliers
-### Get all supliers with user role -> 200
-GET http://user:user@localhost:4004/customer/Suppliers
-
+### Admin
+### Get all supliers without role -> 200
+GET http://admin:admin@localhost:4004
 ### Get all supliers with admin -> !!!!!!!!!
 GET http://admin:admin@localhost:4004/owner/Suppliers
-###1 Get all supliers with admin -> 200
+###1 Get all supliers with admin -> 200 !!!!!!!!!!!
 GET http://admin:admin@localhost:4004/customer/Suppliers

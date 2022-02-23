@@ -11,7 +11,6 @@
 	<properties>
 		<!-- OUR VERSION -->
 		<revision>1.0.0-SNAPSHOT</revision>
-
 		<!-- DEPENDENCIES VERSION -->
 		<jdk.version>1.8</jdk.version>
 		<cds.services.version>1.22.0</cds.services.version>
@@ -154,7 +153,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-<!--				<version>${build-helper-maven-plugin.version}</version>-->
+				<version>1.0</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>

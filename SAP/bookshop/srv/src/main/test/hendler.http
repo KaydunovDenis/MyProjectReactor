@@ -1,0 +1,8 @@
+POST http://admin:admin@localhost:4004/api/browse/Books(f846b0b9-01d4-4f6d-82a4-d79204f62278)/CatalogService.addReview
+content-type: application/json
+
+{
+  "rating": 1,
+  "title": "I hated it",
+  "text": "Birds freak me out"
+}

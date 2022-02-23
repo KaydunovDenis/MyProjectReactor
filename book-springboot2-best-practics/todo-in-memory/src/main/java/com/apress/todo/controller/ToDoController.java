@@ -5,7 +5,6 @@ import com.apress.todo.domain.ToDoBuilder;
 import com.apress.todo.repository.CommonRepository;
 import com.apress.todo.validation.ToDoValidationError;
 import com.apress.todo.validation.ToDoValidationErrorBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -20,8 +19,6 @@ import java.net.URI;
 public class ToDoController {
     private CommonRepository<ToDo> repository;
 
-    //TODO spring must did automatic autowired
-//    @Autowired
     public ToDoController(CommonRepository<ToDo> repository) {
         this.repository = repository;
     }
@@ -36,7 +33,8 @@ public class ToDoController {
         return ResponseEntity.ok(repository.findById(id));
     }
 
-    @PatchMapping("/todo/{id}")
+    // было @PostMapping("/todo/{id}")
+    @PostMapping("/todo/{id}")
     public ResponseEntity<ToDo> setCompleted(@PathVariable String id) {
         ToDo result = repository.findById(id);
         result.setCompleted(true);

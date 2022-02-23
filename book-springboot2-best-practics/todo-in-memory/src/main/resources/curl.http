@@ -63,3 +63,7 @@ GET http://localhost:8080/api/todo
 ### sucssec
 GET http://localhost:8787/api/todo
 
+###integration test with client
+POST http://localhost:8080/api/todo/5e24cbc3-1f9d-4711-86ce-09efd453cf85
+
+
