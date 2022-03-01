@@ -23,8 +23,8 @@ annotate CatalogService.Books with @(UI : {
     	},
 		{Value : price},
 		//Hiding Fields
-		{Value: descr,![@UI.Hidden]},
-		{Value : currency_code,![@UI.Hidden]}
+		{Value : currency_code,![@UI.Hidden]},
+		{Value: descr,![@UI.Hidden]}
 	],
 	// Adding Extra Search Fields
 	SelectionFields : [
@@ -49,3 +49,18 @@ annotate CatalogService.Books with @(UI : {
 	@Measures.ISOCurrency : currency.code
 	price
 };
+
+annotate CatalogService.Books actions {
+    @(
+        Common.SideEffects : {
+            TargetProperties : ['_it/rating'],
+            TargetEntities : [
+                _it,
+                _it.reviews
+            ]
+        },
+        cds.odata.bindingparameter.name : '_it',
+        Core.OperationAvailable : _it.isReviewable
+    )
+    addReview(rating @title : '{i18n>Rating}', title  @title : '{i18n>Title}', text  @title : '{i18n>Text}')
+}

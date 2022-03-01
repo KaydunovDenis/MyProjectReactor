@@ -6,3 +6,6 @@ content-type: application/json
   "title": "I hated it",
   "text": "Birds freak me out"
 }
+
+### Get the new Review
+GET http://admin:admin@localhost:4004/api/browse/Reviews(a581eaf4-3c3c-451c-b6f9-bf1fb3fcd10a) HTTP/1.1
