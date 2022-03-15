@@ -7,17 +7,51 @@ spring:
     driver-class-name: org.sqlite.JDBC
 server:
   port: 4004
+
+---
+spring:
+  config.activate.on-profile: cloud
+  datasource:
+    url: "jdbc:sqlite:../sqlite.db"
+    driver-class-name: org.sqlite.JDBC
+  security:
+    user:
+      name: admin
+      password: admin
+server:
+  port: 4004
 cds:
-#  datasource:
-#    auto-config.enabled: false
   remote.services:
-      OrderService:
-        destination:
-          service: "OrderService"
-          type: "odata-v4"
-          suffix: "/odata/v4"
-          properties:
-            url: http://localhost:8082
+    OrderService:
+      destination:
+        service: "OrderService"
+        type: "odata-v4"
+        suffix: "/odata/v4"
+        properties:
+          url: http://localhost:8081
+  security:
+    xsuaa:
+      enabled: false
+    mock:
+      enabled: false
+    users:
+      - name: admin
+        password: admin
+        roles: admin
+      - name: user
+        password: user
+        roles: user
+
+
+
+#  remote.services:
+#      OrderService:
+#        destination:
+#          service: "OrderService"
+#          type: "odata-v4"
+#          suffix: "/odata/v4"
+#          properties:
+#            url: http://localhost:8082
 #  security:
 #    authenticate-unknown-endpoints: true
 #    open-unrestricted-endpoints: true

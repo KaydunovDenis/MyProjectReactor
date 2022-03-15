@@ -47,6 +47,25 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+<!--				<version>${build-helper-maven-plugin.version}</version>-->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/gen/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- SPRING BOOT PLUGIN -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -87,7 +106,7 @@
 							<goal>install-node</goal>
 						</goals>
 						<configuration>
-							<skip>${cdsdk-global}</skip>
+<!--							<skip>${cdsdk-global}</skip>-->
 							<downloadUrl>${node.url}</downloadUrl>
 						</configuration>
 					</execution>
@@ -98,7 +117,7 @@
 							<goal>install-cdsdk</goal>
 						</goals>
 						<configuration>
-							<skip>${cdsdk-global}</skip>
+<!--							<skip>${cdsdk-global}</skip>-->
 						</configuration>
 					</execution>
 

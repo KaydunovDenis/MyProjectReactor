@@ -1,38 +1,11 @@
 {
-  "namespace": "orders",
   "definitions": {
-    "orders.Orders": {
-      "kind": "entity",
-      "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.Integer"
-        },
-        "price": {
-          "type": "cds.Integer"
-        },
-        "description": {
-          "type": "cds.String"
-        },
-        "id_supplier": {
-          "type": "cds.Integer"
-        }
-      }
-    },
     "OrderService": {
       "@source": "cat-service.cds",
       "kind": "service"
     },
-    "OrderService.Order": {
+    "OrderService.Orders": {
       "kind": "entity",
-      "@readonly": true,
-      "projection": {
-        "from": {
-          "ref": [
-            "orders.Orders"
-          ]
-        }
-      },
       "elements": {
         "ID": {
           "key": true,
@@ -41,16 +14,10 @@
         "price": {
           "type": "cds.Integer"
         },
-        "description": {
-          "type": "cds.String"
-        },
-        "id_supplier": {
+        "idSupplier": {
           "type": "cds.Integer"
         }
-      },
-      "@Capabilities.DeleteRestrictions.Deletable": false,
-      "@Capabilities.InsertRestrictions.Insertable": false,
-      "@Capabilities.UpdateRestrictions.Updatable": false
+      }
     }
   },
   "$version": "2.0",

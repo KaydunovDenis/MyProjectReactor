@@ -1,0 +1,14 @@
+### Get start page -> 200
+GET http://localhost:8081
+
+### Get all oders ->200 - > json metadata + array of oders
+GET http://localhost:8081/odata/v4/OrderService/Orders
+
+### Get all oders ->200 - > json metadata + order bi ID=1
+#{
+#  "@context": "$metadata#Order/$entity",
+#  "@metadataEtag": "W/\"4fb3883db9071f58754e0eec75e49a95f108dda8969c1bab6308b395c6efb49b\"",
+#  "ID": 1,
+#  "price": 100
+#}
+GET http://localhost:8081/odata/v4/OrderService/Orders(1)

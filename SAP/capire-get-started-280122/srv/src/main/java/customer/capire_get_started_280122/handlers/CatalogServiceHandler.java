@@ -1,16 +1,15 @@
 package customer.capire_get_started_280122.handlers;
 
-import java.util.stream.Stream;
-
-import org.springframework.stereotype.Component;
-
+import cds.gen.catalogservice.Books;
+import cds.gen.catalogservice.CatalogService_;
 import com.sap.cds.services.cds.CdsService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.ServiceName;
+import org.springframework.stereotype.Component;
 
-import cds.gen.catalogservice.CatalogService_;
-import cds.gen.catalogservice.Books;
+import java.util.stream.Stream;
+
 
 @Component
 @ServiceName(CatalogService_.CDS_NAME)

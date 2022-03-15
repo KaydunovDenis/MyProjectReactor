@@ -1,0 +1,5 @@
+### Admin
+### Get all supliers without role -> 200
+GET http://admin:admin@localhost:4004
+### Get all supliers with admin -> 200
+GET http://admin:admin@localhost:4004/odata/v4/SupplierService/Suppliers

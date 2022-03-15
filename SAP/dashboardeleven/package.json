@@ -11,10 +11,6 @@
         "credentials": {
           "database": "sqlite.db"
         }
-      },
-      "OrderService": {
-        "kind": "odata",
-        "model": "srv\\external\\OrderService"
       }
     }
   }

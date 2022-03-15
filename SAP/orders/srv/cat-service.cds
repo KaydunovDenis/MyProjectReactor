@@ -1,5 +1,7 @@
-using orders from '../db/data-model';
-
 service OrderService {
-    @readonly entity Order as projection on orders.Orders;
+    entity Orders {
+      key ID : Integer;
+      price: Integer;
+      idSupplier : Integer;
+    }
 }

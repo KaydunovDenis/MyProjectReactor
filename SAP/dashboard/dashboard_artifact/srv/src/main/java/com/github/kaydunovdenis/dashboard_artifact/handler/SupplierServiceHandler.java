@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @ServiceName(SuppliersService_.CDS_NAME)
@@ -29,15 +31,22 @@ public class SupplierServiceHandler implements EventHandler {
     public Result getOrders(CdsReadEventContext context) {
         return orderService.run(context.getCqn());
     }
-    
+
     @After(event = CqnService.EVENT_READ, entity = Suppliers_.CDS_NAME)
     public List<Suppliers> getSuppliersExs(List<Suppliers> suppliers) {
-        for (int i = 0; i < suppliers.size(); i++) {
-			int supplierID = i + 1;
-			CqnSelect myOrdersSelect = Select.from(MyOrders_.class)
-					.where(a-> a.supplierID().eq(supplierID));
-            suppliers.get(i).setOrders(orderService.run(myOrdersSelect).listOf(MyOrders.class));
-        }
-		return suppliers;
-	}
+        List<Integer> suppliersIds = suppliers.stream()
+                .map(Suppliers::getSupplierId)
+                .collect(Collectors.toList());
+
+        CqnSelect select = Select.from(MyOrders_.class)
+                .where(a -> a.supplierID().in(suppliersIds));
+
+        List<MyOrders> list = orderService.run(select).listOf(MyOrders.class);
+
+        Map<Integer, List<MyOrders>> map = list.stream()
+                        .collect(Collectors.groupingBy(MyOrders::getSupplierID));
+
+        suppliers.forEach(s -> s.setOrders(map.get(s.getSupplierId())));
+        return suppliers;
+    }
 }
