@@ -1,7 +1,11 @@
 package com.github.kaydunovdenis.dashboard_artifact.handler;
 
 import cds.gen.ordersservice.OrdersService_;
-import cds.gen.suppliersservice.*;
+import cds.gen.suppliersservice.MyOrders;
+import cds.gen.suppliersservice.MyOrders_;
+import cds.gen.suppliersservice.Suppliers;
+import cds.gen.suppliersservice.SuppliersService_;
+import cds.gen.suppliersservice.Suppliers_;
 import com.sap.cds.Result;
 import com.sap.cds.ql.Select;
 import com.sap.cds.ql.cqn.CqnSelect;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,19 +39,26 @@ public class SupplierServiceHandler implements EventHandler {
 
     @After(event = CqnService.EVENT_READ, entity = Suppliers_.CDS_NAME)
     public List<Suppliers> getSuppliersExs(List<Suppliers> suppliers) {
-        List<Integer> suppliersIds = suppliers.stream()
-                .map(Suppliers::getSupplierId)
-                .collect(Collectors.toList());
+        if (!Objects.isNull(suppliers) && !suppliers.isEmpty()) {
+            List<Integer> suppliersIds = suppliers.stream()
+                    .map(Suppliers::getSupplierId)
+                    .collect(Collectors.toList());
 
-        CqnSelect select = Select.from(MyOrders_.class)
-                .where(a -> a.supplierID().in(suppliersIds));
+            CqnSelect select = Select.from(MyOrders_.class)
+                    .where(a -> a.supplierID().in(suppliersIds));
 
-        List<MyOrders> list = orderService.run(select).listOf(MyOrders.class);
+            Result result = orderService.run(select);
+            List<MyOrders> myOrdersList = result.listOf(MyOrders.class);
 
-        Map<Integer, List<MyOrders>> map = list.stream()
-                        .collect(Collectors.groupingBy(MyOrders::getSupplierID));
+            Map<Integer, List<MyOrders>> myOrderMap = myOrdersList.stream()
+                    .collect(Collectors.groupingBy(MyOrders::getSupplierID));
 
-        suppliers.forEach(s -> s.setOrders(map.get(s.getSupplierId())));
+            suppliers.forEach(s -> {
+                if (!Objects.isNull(s.getOrders())) {
+                    s.setOrders(myOrderMap.get(s.getSupplierId()));
+                }
+            });
+        }
         return suppliers;
     }
 }
