@@ -7,7 +7,6 @@ import com.sap.cds.Result;
 import com.sap.cds.impl.ResultImpl;
 import com.sap.cds.ql.cqn.CqnSelect;
 import com.sap.cds.services.cds.CqnService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,20 +15,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 class SupplierServiceHandlerTest {
-    private List<Suppliers> suppliers;
-    private List<MyOrders> orders;
 
     @InjectMocks
     private SupplierServiceHandler handler;
@@ -40,89 +38,71 @@ class SupplierServiceHandlerTest {
     @Mock
     private Result result;
 
-    @BeforeEach
-    void fillingMockDatabase() {
-        suppliers = new ArrayList<>();
-        suppliers.add(newSupplier(1));
-        suppliers.add(newSupplier(2));
-        suppliers.add(newSupplier(3));
-
-        orders = new ArrayList<>();
-        MyOrders order1 = MyOrders.create();
-        order1.setSupplierID(1);
-        MyOrders order2 = MyOrders.create();
-        order2.setSupplierID(1);
-        MyOrders order3 = MyOrders.create();
-        order3.setSupplierID(2);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-    }
-
     @Test
-    @DisplayName("Check what count of Suppliers before equal count of Suppliers after the execution this method")
-    void testGetSuppliersExs_checkCountSuppliers() {
+    @DisplayName("Check that Service doesn't connect to DB if there aren't suppliers")
+    void testGetSuppliersExsCheckThatServiceDoesNotConnectToDb() {
         //Given
-        int sizeExpect = suppliers.size();
-
-        //When
-        when(service.run(any(CqnSelect.class))).thenReturn(new ResultImpl().result());
-        handler.getSuppliersExs(suppliers);
-        //then
-        int sizeResult = suppliers.size();
-        assertEquals(sizeExpect, sizeResult);
-    }
-
-    //TODO PArameterized test null or new ArrayList
-    @Test
-    @DisplayName("Check that Service don't connect to DB if there aren't suppliers")
-    void testGetSuppliersExs_CheckThatServiceDoesNotConnectToDb() {
-        //Given
-        suppliers = null;
+        List<Suppliers> suppliers = new ArrayList<>();
         //When
         handler.getSuppliersExs(suppliers);
-        //then
-        verify(service, times(0)).run(any(CqnSelect.class));
+        //Then
+        verify(service, never()).run(any(CqnSelect.class));
     }
 
     @Test
-    @DisplayName("Check what Service connect to DB only once")
-    void testGetSuppliersExs_CheckNumberOfConnectToDb() {
-        //Given
-        suppliers = new ArrayList<>();
-        //When
-//        when(service.run(any(CqnSelect.class))).thenReturn(new ResultImpl().result());
-        handler.getSuppliersExs(suppliers);
-        //then
-        verify(service, times(0)).run(any(CqnSelect.class));
+    @DisplayName("Check what this method invokes a request to DB only once")
+    void testGetSuppliersExsCheckNumberOfConnectToDb() {
+        setUp();
+        //Then
+        verify(service).run(any(CqnSelect.class));
     }
 
-    //TODO PArametarizedTEST
     @Test
-    @DisplayName("Check what Orders has add to Suppliers")
-    void testGetSuppliersExs_CheckExtensionOfSuppliersByOrders() {
+    @DisplayName("Checking that Orders have been added to Suppliers")
+    void testGetSuppliersExsCheckExtensionOfSuppliersByOrders() {
+        setUp().stream()
+                .filter(s -> !Objects.isNull(s.getOrders()))
+                .forEach(s -> s.getOrders().forEach(o -> assertEquals(s.getSupplierId(), o.getSupplierID())));
+    }
+
+    @Test
+    @DisplayName("Checking that Orders haven't been added to Supplier")
+    void testGetSuppliersExsCheckSupplierWithoutOrders() {
+        int supplierIdWithoutOrders = 3;
+        setUp().stream()
+                .filter(s -> s.getSupplierId() == supplierIdWithoutOrders)
+                .findAny()
+                .ifPresent(s -> assertNull(s.getOrders()));
+    }
+
+    private List<Suppliers> setUp() {
         //Given
-        int idSupplier = suppliers.size() + 1;
-        suppliers.add(newSupplier(idSupplier));
-        MyOrders orderN = MyOrders.create();
-        orderN.setSupplierID(idSupplier);
-        orders.add(orderN);
+        List<Suppliers> suppliers = Arrays.asList(
+                mySupplier(1),
+                mySupplier(2),
+                mySupplier(3));
+        List<MyOrders> orders = Arrays.asList(
+                myOrder(1),
+                myOrder(2),
+                myOrder(4),
+                myOrder(1)
+        );
 
         //When
         when(service.run(any(CqnSelect.class))).thenReturn(result);
         when(result.listOf(MyOrders.class)).thenReturn(orders);
 
         handler.getSuppliersExs(suppliers);
-        //Then
-        suppliers.forEach(supplier -> {
-            if (!Objects.isNull(supplier.getOrders())) {
-                supplier.getOrders().forEach((order ->
-                        assertEquals(supplier.getSupplierId(), order.getSupplierID())));
-            }
-        });
+        return suppliers;
     }
 
-    private Suppliers newSupplier(Integer id) {
+    private MyOrders myOrder(Integer supplierId) {
+        MyOrders myOrders = MyOrders.create();
+        myOrders.setSupplierID(supplierId);
+        return myOrders;
+    }
+
+    private Suppliers mySupplier(Integer id) {
         Suppliers supplier = Suppliers.create();
         supplier.setSupplierId(id);
         return supplier;

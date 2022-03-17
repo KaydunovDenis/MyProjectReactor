@@ -20,17 +20,12 @@
 		<revision>1.0.0-SNAPSHOT</revision>
 
 		<!-- DEPENDENCIES VERSION -->
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.11</jdk.version>
 		<cds.services.version>1.22.1</cds.services.version>
 		<spring.boot.version>2.6.2</spring.boot.version>
 
 		<node.url>https://nodejs.org/dist/</node.url>
 	</properties>
-
-	<modules>
-		<module>srv</module>
-		<module>integration-tests</module>
-	</modules>
 
 	<dependencyManagement>
 		<dependencies>

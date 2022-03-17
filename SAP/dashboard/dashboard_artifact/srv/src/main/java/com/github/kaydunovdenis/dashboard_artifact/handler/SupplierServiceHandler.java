@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,25 +38,20 @@ public class SupplierServiceHandler implements EventHandler {
 
     @After(event = CqnService.EVENT_READ, entity = Suppliers_.CDS_NAME)
     public List<Suppliers> getSuppliersExs(List<Suppliers> suppliers) {
-        if (!Objects.isNull(suppliers) && !suppliers.isEmpty()) {
+        if (!suppliers.isEmpty()) {
             List<Integer> suppliersIds = suppliers.stream()
                     .map(Suppliers::getSupplierId)
                     .collect(Collectors.toList());
 
             CqnSelect select = Select.from(MyOrders_.class)
                     .where(a -> a.supplierID().in(suppliersIds));
-
             Result result = orderService.run(select);
             List<MyOrders> myOrdersList = result.listOf(MyOrders.class);
 
             Map<Integer, List<MyOrders>> myOrderMap = myOrdersList.stream()
                     .collect(Collectors.groupingBy(MyOrders::getSupplierID));
 
-            suppliers.forEach(s -> {
-                if (!Objects.isNull(s.getOrders())) {
-                    s.setOrders(myOrderMap.get(s.getSupplierId()));
-                }
-            });
+            suppliers.forEach(s -> s.setOrders(myOrderMap.get(s.getSupplierId())));
         }
         return suppliers;
     }
