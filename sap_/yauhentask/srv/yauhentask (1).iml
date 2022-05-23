@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <webroots />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-starter-spring-boot:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-services-api:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds4j-api:1.24.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds-services-impl:1.20.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds-feature-jdbc:1.20.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds4j-runtime:1.24.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds4j-jdbc-spi:1.24.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds4j-tx:1.24.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds-framework-spring-boot:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.6" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.28" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.53" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.53" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.53" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:4.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds-adapter-odata-v4:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-adapter-api:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-services-utils:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.jms:javax.jms-api:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.14" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.15" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds4j-core:1.24.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:30.1-jre" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:failureaccess:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.google.j2objc:j2objc-annotations:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.mt:cds-mtx:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.security.xsuaa:token-client:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.security.xsuaa:api:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.security:java-api:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20210307" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:cloudplatform-connectivity:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:cloudplatform-core:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:caching:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:security:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:tenant:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.cloudplatform:servlet:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.8" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.sdk.quality:common:3.38.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: io.vavr:vavr:0.10.3" level="project" />
+    <orderEntry type="library" name="Maven: io.vavr:vavr-match:0.10.3" level="project" />
+    <orderEntry type="library" name="Maven: com.mikesamuel:json-sanitizer:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.mt:tools:1.11.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds.repackaged:odata-v4-lib:1.20.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.woodstox:stax2-api:4.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml.woodstox:woodstox-core:6.2.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml:aalto-xml:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.h2database:h2:1.4.200" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest:2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-starter-cloudfoundry:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-feature-hana:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.db.jdbc:ngdbc:2.8.14" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-feature-mt:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.mt:multi-tenant-runtime:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.mt:multi-tenant-subscription:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.instancemanager:client:1.17.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.instancemanager:util:1.17.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.instancemanager:client-api:1.17.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cds:cds-integration-cloud-sdk:1.20.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cloud.sdk.frameworks:resilience4j:3.55.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.sap.cloud.sdk.cloudplatform:resilience:3.55.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-circuitbreaker:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-core:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-bulkhead:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-timelimiter:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-cache:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.cache:cache-api:1.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.resilience4j:resilience4j-retry:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-feature-cloudfoundry:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cds:cds-feature-xsuaa:1.20.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.security.xsuaa:xsuaa-spring-boot-starter:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: com.sap.cloud.security.xsuaa:spring-xsuaa:2.10.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-to-slf4j:2.14.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-oauth2-jose:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-oauth2-core:5.5.2" level="project" />
+    <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.10.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-oauth2-resource-server:5.5.2" level="project" />
+  </component>
+</module>
