@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringSupplierApplicationTests {
+class ApplicationTest {
 
     @Disabled("initial commit")
     @Test

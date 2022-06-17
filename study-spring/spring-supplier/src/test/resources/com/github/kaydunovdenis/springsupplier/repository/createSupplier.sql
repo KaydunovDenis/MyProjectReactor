@@ -1,0 +1,1 @@
+INSERT INTO suppliers (id, name) VALUES (1, 'NameSupplier');
