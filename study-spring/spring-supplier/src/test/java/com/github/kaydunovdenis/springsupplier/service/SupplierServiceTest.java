@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +41,7 @@ class SupplierServiceTest {
     private SupplierService supplierService;
 
     @Test
-    void create() {
+    void save() {
         //Before
         int expectedCountSuppliers = 5;
 
@@ -53,23 +51,22 @@ class SupplierServiceTest {
         address.setId(5L);
         supplier.setAddress(address);
         //Then
-        supplierService.create(supplier);
+        supplierService.save(supplier);
         //Given
         assertEquals(expectedCountSuppliers, supplierService.readAll().size());
     }
 
     @Test
-    void delete() {
+    void readByName() {
         //Before
-        Long idSupplier = 4L;
-        int expectedCountSuppliers = 3;
-        Assertions.assertNotNull(supplierService.read(idSupplier));
+        int expectedCountSuppliers = 1;
+        String name = "Supplier1";
         //Then
-        supplierService.delete(idSupplier);
+        List<Supplier> suppliers = supplierService.readByName(name);
         //Given
-        int actualCountSuppliers = supplierService.readAll().size();
-        //Given
-        assertEquals(expectedCountSuppliers, actualCountSuppliers);
+        assertEquals(expectedCountSuppliers, suppliers.size());
+        suppliers.forEach(supplier ->
+                assertEquals(name, supplier.getName()));
     }
 
     @Test
@@ -78,33 +75,34 @@ class SupplierServiceTest {
         Supplier expectedSupplier = getInstanceSupplier();
         expectedSupplier.setName("OtherName");
         //Then
-        Supplier actualSupplier = supplierService.update(expectedSupplier);
+        Supplier actualSupplier = supplierService.update(expectedSupplier, expectedSupplier.getId());
         //Given
         assertEquals(expectedSupplier, actualSupplier);
     }
 
     @Test
-    @Transactional
-        //TODO Transactional  is norm? потому что сравниваем два суплаера по полю ресипиентов, а там прокси
-    void read() {
-        //Before
-        Long supplierID = 1L;
-        Supplier expectedSupplier = getInstanceSupplier();
-        //Then
-        Supplier actualSupplier = supplierService.read(supplierID);
-        //Given
-        assertEquals(expectedSupplier, actualSupplier);
-    }
-
-    @Test
-    void checkEntityNotFoundException() {
+    void deleteById() {
         //Before
         Long idSupplier = 4L;
-        Assertions.assertNotNull(supplierService.read(idSupplier));
+        int expectedCountSuppliers = 3;
+        Assertions.assertNotNull(supplierService.readById(idSupplier));
         //Then
-        supplierService.delete(idSupplier);
+        supplierService.deleteById(idSupplier);
         //Given
-        Assertions.assertThrows(ResponseStatusException.class, () -> supplierService.read(idSupplier));
+        int actualCountSuppliers = supplierService.readAll().size();
+        //Given
+        assertEquals(expectedCountSuppliers, actualCountSuppliers);
+    }
+
+    @Test
+    void readExpandSupplier() {
+        //Before
+        Supplier expectedSuppliers = getInstanceSupplier();
+        //Then
+        Supplier actualSupplier = supplierService.readExpandSupplier(expectedSuppliers.getId());
+        //Given
+        assertEquals(expectedSuppliers, actualSupplier);
+        //TODO
     }
 
     @Test
@@ -115,6 +113,18 @@ class SupplierServiceTest {
         List<Supplier> suppliers = supplierService.readAll();
         //Given
         assertEquals(expectedCountSuppliers, suppliers.size());
+    }
+
+    @Test
+    void findById() {
+        //Before
+        Supplier expectedSupplier = getInstanceSupplier();
+        Long supplierId = expectedSupplier.getId();
+        //Then
+        Supplier actualSupplier = supplierService.readById(supplierId);
+        //Given
+        assertEquals(expectedSupplier.getId(), actualSupplier.getId());
+        assertEquals(expectedSupplier.getName(), actualSupplier.getName());
     }
 
     private Supplier getInstanceSupplier() {

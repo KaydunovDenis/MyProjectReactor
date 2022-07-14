@@ -6,6 +6,7 @@ import com.github.kaydunovdenis.springsupplier.util.SupplierConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -20,35 +21,43 @@ public class SupplierService {
         this.supplierRepository = supplierRepository;
     }
 
-    public Supplier create(Supplier supplier) {
+    public Supplier save(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
 
-    public Supplier read(Long id) {
+    public Supplier readById(Long id) {
         return supplierRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public Supplier readByName(String name) {
-        return supplierRepository.findByName(name).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public Supplier readExpandSupplier(Long id) {
+        return supplierRepository.readExpandSupplier(id);
+    }
+
+    public List<Supplier> readByName(String name) {
+        return supplierRepository.findByName(name);
     }
 
     public List<Supplier> readAll() {
         return supplierRepository.findAll();
     }
 
+    @Transactional
     public Supplier update(Supplier supplier, Long id) {
-        Supplier supplierToUpdate = read(id);
-        SupplierConverter.updateSupplier(supplier, supplierToUpdate);
-        return supplierRepository.save(supplierToUpdate);
+        Supplier supplierDTO = readById(id);
+
+        //todo to interface
+        //todo ConverterRegistry
+        SupplierConverter.updateSupplier(supplier, supplierDTO);
+        return save(supplierDTO);
     }
 
-    public Supplier update(Supplier supplier) {
-        return update(supplier, supplier.getId());
+    public void delete(Supplier supplier) {
+        supplierRepository.deleteById(supplier.getId());
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         supplierRepository.deleteById(id);
     }
+
 }

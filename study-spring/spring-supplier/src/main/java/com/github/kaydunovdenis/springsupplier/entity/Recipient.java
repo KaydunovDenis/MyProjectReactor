@@ -87,7 +87,6 @@ public class Recipient {
         int result = getId().hashCode();
         result = 31 * result + getName().hashCode();
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getSuppliers() != null ? getSuppliers().hashCode() : 0);
         return result;
     }
 

@@ -1,9 +1,4 @@
-TRUNCATE TABLE addresses;
-TRUNCATE TABLE orders;
-TRUNCATE TABLE  products;
-TRUNCATE TABLE  recipients;
-TRUNCATE TABLE  supplier_recipient;
-TRUNCATE TABLE suppliers;
+TRUNCATE TABLE addresses, orders, products, recipients, supplier_recipient, suppliers;
 
 INSERT INTO addresses (country, city, street, building)
 VALUES ('Belarus', 'Gomel', 'Covetskaya', 32),
@@ -37,11 +32,11 @@ VALUES ('recipient1', 1),
        ('recipient3', 3),
        ('recipient4', 4);
 
-INSERT INTO supplier_recipient
-VALUES (1, 1),
-       (2, 1),
-       (3, 1),
-       (1, 2),
-       (1, 3),
-       (2, 4),
-       (1, 4);
+INSERT INTO supplier_recipient VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(1, 2),
+(1, 3),
+(2, 4),
+(1, 4);

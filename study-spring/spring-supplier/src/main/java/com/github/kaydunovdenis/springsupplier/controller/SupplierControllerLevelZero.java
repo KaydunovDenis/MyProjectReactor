@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+//@RestController
 public class SupplierControllerLevelZero {
 
     private final SupplierService supplierService;
@@ -30,12 +30,12 @@ public class SupplierControllerLevelZero {
 
     @PostMapping("/supplier")
     public Supplier newSupplier(@RequestBody Supplier newEmployee) {
-        return supplierService.create(newEmployee);
+        return supplierService.save(newEmployee);
     }
 
     @GetMapping("/supplier/{id}")
     public Supplier getSupplier(@PathVariable Long id) {
-        return supplierService.read(id);
+        return supplierService.readById(id);
     }
 
     @PutMapping("/supplier/{id}")
@@ -45,6 +45,6 @@ public class SupplierControllerLevelZero {
 
     @DeleteMapping("/supplier/{id}")
     void deleteSupplier(@PathVariable Long id) {
-        supplierService.delete(id);
+        supplierService.deleteById(id);
     }
 }

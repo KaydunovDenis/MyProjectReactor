@@ -13,11 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "suppliers")
+@Table(name = "suppliers")//изначально Entity вяжется на таблицу 'supplier'
+//@SelectBeforeUpdate - проверяет в кэше нужно ли обновить
+/**
+ * чтобы создать билдер можно использовать Refactor -> Delombok
+ */
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +28,12 @@ public class Supplier {
 
     private String name;
 
-    //todo добавил каскад, это норм?
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    //@JoinColumn вместо получения 'address_id' мы получаем объект Address
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
@@ -43,7 +50,7 @@ public class Supplier {
     /**
      * Конструктор по умолчанию необходимый Hibernate
      */
-    protected Supplier() {
+    public Supplier() {
     }
 
     /**
@@ -53,6 +60,18 @@ public class Supplier {
     public Supplier(String name, Address address) {
         this.name = name;
         this.address = address;
+    }
+
+    public Supplier(Long id, String name, Address address, List<Order> orders, Set<Recipient> recipients) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.orders = orders;
+        this.recipients = recipients;
+    }
+
+    public static SupplierBuilder builder() {
+        return new SupplierBuilder();
     }
 
     public Long getId() {
@@ -95,10 +114,6 @@ public class Supplier {
         this.recipients = recipients;
     }
 
-    //TODO check implementation
-    //TODO Найти правила переопределения для ентити
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -133,5 +148,49 @@ public class Supplier {
                 ", orders=" + orders +
                 ", recipients=" + recipients +
                 '}';
+    }
+
+    public static class SupplierBuilder {
+        private Long id;
+        private String name;
+        private Address address;
+        private List<Order> orders;
+        private Set<Recipient> recipients;
+
+        SupplierBuilder() {
+        }
+
+        public SupplierBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public SupplierBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public SupplierBuilder address(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public SupplierBuilder orders(List<Order> orders) {
+            this.orders = orders;
+            return this;
+        }
+
+        public SupplierBuilder recipients(Set<Recipient> recipients) {
+            this.recipients = recipients;
+            return this;
+        }
+
+        public Supplier build() {
+            return new Supplier(id, name, address, orders, recipients);
+        }
+
+        public String toString() {
+            return "Supplier.SupplierBuilder(id=" + this.id + ", name=" + this.name + ", address=" + this.address + ", orders=" + this.orders + ", recipients=" + this.recipients + ")";
+        }
     }
 }
