@@ -4,4 +4,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/supplier
     username: postgres
     password: password
+debug: false
 

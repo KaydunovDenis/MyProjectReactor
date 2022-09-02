@@ -5,11 +5,11 @@ TRUNCATE TABLE  recipients;
 TRUNCATE TABLE  supplier_recipient;
 TRUNCATE TABLE suppliers;
 
-INSERT INTO addresses (country, city, street, building)
-VALUES ('Belarus', 'Gomel', 'Covetskaya', 32),
-       ('Belarus', 'Gomel', 'Covetskaya', 23433),
-       ('Belarus', 'Gomel', 'Covetskaya', 234),
-       ('Russia', 'Moskow', 'Derebasovka', 323);
+INSERT INTO addresses (id, country, city, street, building)
+VALUES (1, 'Belarus', 'Gomel', 'Covetskaya', 32),
+       (2, 'Belarus', 'Gomel', 'Covetskaya', 23433),
+       (3, 'Belarus', 'Gomel', 'Covetskaya', 234),
+       (4, 'Russia', 'Moskow', 'Derebasovka', 323);
 
 INSERT INTO suppliers (name, address_id)
 VALUES ('Supplier1', 1),

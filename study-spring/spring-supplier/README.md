@@ -21,7 +21,7 @@ List or Set what use in Hibernate and way?
 
 
 ### Adoption with MapStruct
-or SpringConvertor
++
 
 ### 4 Controller
 Написать 4-e Controller для Supplier согласно уровням Richardson Maturity Model
@@ -34,7 +34,12 @@ or SpringConvertor
 USER
 ADMIN - Delete is available only for ADMIN
 
-### Aдоптировать  тесты под oauth 2
+### Адаптировать тесты под oauth 2
 
 ###Note
 Supplier need extend from Representation Class
+
+### Errors
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not prepare statement;
+SQL [call next value for hibernate_sequence];
+-когда неправильный генератор ключей

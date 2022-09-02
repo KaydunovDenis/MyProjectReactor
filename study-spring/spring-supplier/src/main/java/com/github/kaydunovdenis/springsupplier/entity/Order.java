@@ -1,5 +1,9 @@
 package com.github.kaydunovdenis.springsupplier.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,20 +23,20 @@ public class Order {
 
     private String name;
 
+    //TODO сделать чтобы прайс считался на основе суммы продуктов
     private Integer price;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Product> products;
 
-    public Order() {
+    protected Order() {
     }
 
-    public Order(Long id, String name, Integer price) {
-        this.id = id;
+    public Order(String name, Integer price) {
         this.name = name;
         this.price = price;
     }
@@ -84,9 +88,8 @@ public class Order {
 
         Order order = (Order) o;
 
-        if (!getId().equals(order.getId())) return false;
         if (!getName().equals(order.getName())) return false;
-        if (!getPrice().equals(order.getPrice())) return false;
+        if (getPrice() != null ? !getPrice().equals(order.getPrice()) : order.getPrice() != null) return false;
         if (getSupplier() != null ? !getSupplier().equals(order.getSupplier()) : order.getSupplier() != null)
             return false;
         return getProducts() != null ? getProducts().equals(order.getProducts()) : order.getProducts() == null;
@@ -94,10 +97,8 @@ public class Order {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getPrice().hashCode();
-        result = 31 * result + (getSupplier() != null ? getSupplier().hashCode() : 0);
+        int result = getName().hashCode();
+        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
         result = 31 * result + (getProducts() != null ? getProducts().hashCode() : 0);
         return result;
     }

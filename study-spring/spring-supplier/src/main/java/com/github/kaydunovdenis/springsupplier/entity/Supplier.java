@@ -1,5 +1,8 @@
 package com.github.kaydunovdenis.springsupplier.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,35 +15,39 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "suppliers")//изначально Entity вяжется на таблицу 'supplier'
 //@SelectBeforeUpdate - проверяет в кэше нужно ли обновить
-/**
- * чтобы создать билдер можно использовать Refactor -> Delombok
- */
 public class Supplier {
+    /**
+     * GenerationType.IDENTITY  is a nice simple approach
+     * There is yet another important runtime impact of choosing IDENTITY generation:
+     * Hibernate will not be able to JDBC batching for inserts of the entities
+     * (Hibernate не сможет выполнять пакетную обработку JDBC для вставок сущностей) that use IDENTITY generation.
+     * If the application is not usually creating many new instances of a given type of entity that
+     * uses IDENTITY generation, then this is not an important impact since batching would not have been helpful anyway.
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     private String name;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER
+            cascade = CascadeType.ALL,//при сохранении/удалении Supplier каскадно удалить и адрес за ненужностью
+//            orphanRemoval = true,// при удалении адреса у Supplier, он удалится полностью из базы
+            fetch = FetchType.EAGER//EAGER стоит по дефолту для @OneToOne
     )
     //@JoinColumn вместо получения 'address_id' мы получаем объект Address
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER)
-    private List<Order> orders;
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "supplier_recipient",
             joinColumns = @JoinColumn(name = "supplier_id"),
@@ -50,7 +57,7 @@ public class Supplier {
     /**
      * Конструктор по умолчанию необходимый Hibernate
      */
-    public Supplier() {
+    protected Supplier() {
     }
 
     /**
@@ -62,7 +69,7 @@ public class Supplier {
         this.address = address;
     }
 
-    public Supplier(Long id, String name, Address address, List<Order> orders, Set<Recipient> recipients) {
+    public Supplier(Long id, String name, Address address, Set<Order> orders, Set<Recipient> recipients) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -98,11 +105,11 @@ public class Supplier {
         this.address = address;
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 
@@ -117,9 +124,7 @@ public class Supplier {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Supplier)) return false;
-
-        Supplier supplier = (Supplier) o;
+        if (!(o instanceof Supplier supplier)) return false;
 
         if (!getId().equals(supplier.getId())) return false;
         if (!getName().equals(supplier.getName())) return false;
@@ -143,18 +148,21 @@ public class Supplier {
     public String toString() {
         return "\nSupplier{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", orders=" + orders +
-                ", recipients=" + recipients +
+                ",\n name='" + name + '\'' +
+                ",\n address=" + address +
+                ",\n orders=" + orders +
+                ",\n recipients=" + recipients +
                 '}';
     }
 
+    /**
+     * Чтобы создать Builder автоматически можно использовать Refactor -> Delombok
+     */
     public static class SupplierBuilder {
         private Long id;
         private String name;
         private Address address;
-        private List<Order> orders;
+        private Set<Order> orders;
         private Set<Recipient> recipients;
 
         SupplierBuilder() {
@@ -175,7 +183,7 @@ public class Supplier {
             return this;
         }
 
-        public SupplierBuilder orders(List<Order> orders) {
+        public SupplierBuilder orders(Set<Order> orders) {
             this.orders = orders;
             return this;
         }

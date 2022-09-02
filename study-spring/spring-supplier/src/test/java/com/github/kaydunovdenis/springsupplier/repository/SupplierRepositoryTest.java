@@ -1,25 +1,40 @@
 package com.github.kaydunovdenis.springsupplier.repository;
 
+import com.github.kaydunovdenis.springsupplier.Application;
 import com.github.kaydunovdenis.springsupplier.entity.Address;
 import com.github.kaydunovdenis.springsupplier.entity.Supplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
+/**
+ * Следующие две аннотации делают наши тесты независимыми
+ * т.е. перед каждым тестом запускается скрипт data.sql для наполнения базы тестовыми данными
+ * <p>
+ * DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+ * The presence of this annotation on a test method indicates that the underlying Spring container is 'dirtied'
+ * during the execution of the test method, and thus must be rebuilt after the test method finishes execution
+ * (regardless of whether the test passed or not).
+ *
+ * AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+ */
+@SpringBootTest(classes = Application.class)
+@ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class SupplierRepositoryTest {
 
     @Autowired
@@ -41,8 +56,10 @@ class SupplierRepositoryTest {
 
     @Test
     void saveTest() {
-        final Address address = new Address("Belarus", "Gomel", "Covetskaya", 32);
-        supplierRepository.save(new Supplier("Andreas", address));
+        Address address = new Address("Belarus", "Gomel", "Covetskaya", 32);
+        Supplier supplier = new Supplier("Andreas", address);
+
+        supplierRepository.save(supplier);
         Assertions.assertEquals(supplierRepository.count(), 1);
     }
 
@@ -63,11 +80,11 @@ class SupplierRepositoryTest {
     @Sql("createSupplier.sql")
     void should_delete_user() {
         //Given
-        var supplier = supplierRepository.findById(1L);
+        Optional<Supplier> supplier = supplierRepository.findById(1L);
         assertTrue(supplier.isPresent());
 
         //When
-        supplierRepository.delete(supplier.orElseThrow());
+        supplierRepository.delete(supplier.get());
 
         //Then
         Iterable<Supplier> users = supplierRepository.findAll();

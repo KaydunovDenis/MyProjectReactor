@@ -1,5 +1,6 @@
 package com.github.kaydunovdenis.springsupplier.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,11 +16,14 @@ import java.util.Set;
 public class Recipient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToOne
+    @OneToOne(
+            cascade = CascadeType.ALL,//при сохранении/удалении Recipient каскадно удалить адрес за ненужностью
+            orphanRemoval = true// при удалении адреса у Recipient, он удалится полностью из базы
+    )
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -29,11 +33,8 @@ public class Recipient {
     protected Recipient() {
     }
 
-    public Recipient(Long id, String name, Address address, Set<Supplier> suppliers) {
-        this.id = id;
+    public Recipient(String name) {
         this.name = name;
-        this.address = address;
-        this.suppliers = suppliers;
     }
 
     public Long getId() {
@@ -71,28 +72,22 @@ public class Recipient {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Recipient)) return false;
+        if (!(o instanceof Recipient recipient)) return false;
 
-        Recipient recipient = (Recipient) o;
-
-        if (!getId().equals(recipient.getId())) return false;
         if (!getName().equals(recipient.getName())) return false;
-        if (getAddress() != null ? !getAddress().equals(recipient.getAddress()) : recipient.getAddress() != null)
-            return false;
-        return getSuppliers() != null ? getSuppliers().equals(recipient.getSuppliers()) : recipient.getSuppliers() == null;
+        return getAddress() != null ? getAddress().equals(recipient.getAddress()) : recipient.getAddress() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
+        int result = getName().hashCode();
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "\nRecipient{" +
+        return "\n\tRecipient{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +

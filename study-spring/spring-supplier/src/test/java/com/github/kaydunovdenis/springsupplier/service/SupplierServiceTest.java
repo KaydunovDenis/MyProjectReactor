@@ -1,24 +1,24 @@
 package com.github.kaydunovdenis.springsupplier.service;
 
 import com.github.kaydunovdenis.springsupplier.Application;
-import com.github.kaydunovdenis.springsupplier.entity.Address;
-import com.github.kaydunovdenis.springsupplier.entity.Order;
-import com.github.kaydunovdenis.springsupplier.entity.Recipient;
+import com.github.kaydunovdenis.springsupplier.SupplierProvider;
 import com.github.kaydunovdenis.springsupplier.entity.Supplier;
-import org.junit.jupiter.api.Assertions;
+import org.hibernate.LazyInitializationException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Следующие две аннотации делают наши тесты независимыми
@@ -41,22 +41,30 @@ class SupplierServiceTest {
     private SupplierService supplierService;
 
     @Test
-    void save() {
+    @DisplayName("When add new Supplier, count of suppliers increment to 1 ")
+    void save1() {
         //Before
-        int expectedCountSuppliers = 5;
-
-        Supplier supplier = getInstanceSupplier();
-        supplier.setId(5L);
-        Address address = supplier.getAddress();
-        address.setId(5L);
-        supplier.setAddress(address);
+        int expectedCountOfSuppliers = getCountOfSuppliers() + 1;
+        Supplier supplier = SupplierProvider.createSupplier();
         //Then
         supplierService.save(supplier);
         //Given
-        assertEquals(expectedCountSuppliers, supplierService.readAll().size());
+        assertEquals(expectedCountOfSuppliers, getCountOfSuppliers());
     }
 
     @Test
+    @DisplayName("When add new Supplier, receive supplier equal similar Supplier ")
+    void save2() {
+        //Before
+        Supplier expectedSupplier = SupplierProvider.createSupplier();
+        //Then
+        Supplier actualSupplier = supplierService.save(expectedSupplier);
+        //Given
+        assertEquals(expectedSupplier, actualSupplier);
+    }
+
+    @Test
+    @DisplayName("When read Supplier by Name, I receive Supplier with this name")
     void readByName() {
         //Before
         int expectedCountSuppliers = 1;
@@ -65,78 +73,135 @@ class SupplierServiceTest {
         List<Supplier> suppliers = supplierService.readByName(name);
         //Given
         assertEquals(expectedCountSuppliers, suppliers.size());
-        suppliers.forEach(supplier ->
-                assertEquals(name, supplier.getName()));
+        suppliers.forEach(supplier -> assertEquals(name, supplier.getName()));
     }
 
     @Test
-    void update() {
+    @DisplayName("When update Supplier which not found in DB, then empty save Supplier")
+    void update1() {
         //Before
-        Supplier expectedSupplier = getInstanceSupplier();
-        expectedSupplier.setName("OtherName");
+        Supplier expectedSupplier = SupplierProvider.createSupplier();
         //Then
-        Supplier actualSupplier = supplierService.update(expectedSupplier, expectedSupplier.getId());
+        Supplier actualSupplier = supplierService.update(expectedSupplier);
         //Given
         assertEquals(expectedSupplier, actualSupplier);
     }
 
     @Test
-    void deleteById() {
+    @DisplayName("When update Supplier with new Name, then save differences and ID did not change")
+    void update2() {
         //Before
-        Long idSupplier = 4L;
-        int expectedCountSuppliers = 3;
-        Assertions.assertNotNull(supplierService.readById(idSupplier));
+        final String NAME = "New name for Update";
+        Supplier expectedSupplier = supplierService.save(SupplierProvider.createSupplier());
         //Then
-        supplierService.deleteById(idSupplier);
+        expectedSupplier.setName(NAME);
+        Supplier actualSupplier = supplierService.update(expectedSupplier);
         //Given
-        int actualCountSuppliers = supplierService.readAll().size();
+        assertEquals(expectedSupplier.getName(), actualSupplier.getName());
+        assertEquals(expectedSupplier.getId(), actualSupplier.getId());
+    }
+
+    @Test
+    @DisplayName("When delete Supplier, count of supplier decreases by 1")
+    void delete1() {
+        //Before
+        final Long idSupplier = 4L;
+        int expectedCountSuppliers = getCountOfSuppliers() - 1;
+        //Then
+        supplierService.delete(idSupplier);
+        //Given
+        int actualCountSuppliers = getCountOfSuppliers();
         //Given
         assertEquals(expectedCountSuppliers, actualCountSuppliers);
     }
 
     @Test
     void readExpandSupplier() {
+        //TODO write test for readExpandSupplier
         //Before
-        Supplier expectedSuppliers = getInstanceSupplier();
+        Supplier expectedSupplier = supplierService.save(SupplierProvider.createSupplier());
         //Then
-        Supplier actualSupplier = supplierService.readExpandSupplier(expectedSuppliers.getId());
+        Supplier actualSupplier = supplierService.readExpandSupplier(1L);
         //Given
-        assertEquals(expectedSuppliers, actualSupplier);
-        //TODO
+        assertNotNull(actualSupplier);
+//        assertEquals(expectedSupplier.getId(), actualSupplier.getId());
+//        assertEquals(expectedSupplier.getName(), actualSupplier.getName());
+////        assertEquals(expectedSupplier.getAddress(), actualSupplier.getAddress());
+////        assertEquals(expectedSupplier.getRecipients(), actualSupplier.getRecipients());
+//        assertEquals(expectedSupplier.getOrders(), actualSupplier.getOrders());
+//        assertEquals(expectedSupplier.getOrders(), actualSupplier.getOrders());
+
     }
 
     @Test
-    void readAll() {
+    void findAll() {
         //Before
-        int expectedCountSuppliers = 4;
+        final int expectedCountSuppliers = 4;
         //Then
-        List<Supplier> suppliers = supplierService.readAll();
+        List<Supplier> suppliers = supplierService.findAll();
         //Given
         assertEquals(expectedCountSuppliers, suppliers.size());
     }
 
     @Test
-    void findById() {
+    @DisplayName("When id is null then receive NullPointerException")
+    void findById1() {
         //Before
-        Supplier expectedSupplier = getInstanceSupplier();
+        Supplier expectedSupplier = SupplierProvider.createSupplier();
         Long supplierId = expectedSupplier.getId();
         //Then
-        Supplier actualSupplier = supplierService.readById(supplierId);
+        //Given
+        assertThrows(NullPointerException.class, () -> supplierService.findById(supplierId));
+    }
+
+    @Test
+    @DisplayName("When not found Supplier by Id then receive exception HttpStatus.NOT_FOUND")
+    void findById2() {
+        //Before
+        final Long missingSupplierId = 5L;
+        //Then
+        //Given
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> supplierService.findById(missingSupplierId));
+        assertEquals(HttpStatus.NOT_FOUND.toString(), exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("When supplier with id exist then receive supplier by id")
+    void findById3() {
+        //Before
+        Long supplierId = 2L;
+        //Then
+        Supplier actualSupplier = supplierService.findById(supplierId);
+        //Given
+        assertNotNull(actualSupplier);
+    }
+
+    @Test
+    @DisplayName("When save supplier then receive equal supplier")
+    void saveAndThenFindById() {
+        //Before
+        Supplier expectedSupplier = supplierService.save(SupplierProvider.createSupplier());
+        //Then
+        Supplier actualSupplier = supplierService.findById(expectedSupplier.getId());
         //Given
         assertEquals(expectedSupplier.getId(), actualSupplier.getId());
+        assertEquals(expectedSupplier.getAddress(), actualSupplier.getAddress());
         assertEquals(expectedSupplier.getName(), actualSupplier.getName());
     }
 
-    private Supplier getInstanceSupplier() {
-        Address address = new Address("Belarus", "Gomel", "Covetskaya", 32);
-        address.setId(1L);
-        List<Order> orders = new ArrayList<>();
-        Set<Recipient> recipients = new HashSet<>();
+    @Test
+    @DisplayName("When receive supplier, it don't have Recipients and Orders")
+    void lazyInitializationTest() {
+        //Before
+        Supplier expectedSupplier = supplierService.save(SupplierProvider.createSupplier());
+        //Then
+        Supplier actualSupplier = supplierService.findById(expectedSupplier.getId());
+        //Given
+        assertThrows(LazyInitializationException.class, () -> expectedSupplier.equals(actualSupplier));
+    }
 
-        Supplier expectedSupplier = new Supplier("Supplier1", address);
-        expectedSupplier.setId(1L);
-        expectedSupplier.setOrders(orders);
-        expectedSupplier.setRecipients(recipients);
-        return expectedSupplier;
+    private int getCountOfSuppliers() {
+        return supplierService.findAll().size();
     }
 }

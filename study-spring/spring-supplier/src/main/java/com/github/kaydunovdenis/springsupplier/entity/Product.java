@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -24,6 +24,11 @@ public class Product {
     private Order order;
 
     protected Product() {
+    }
+
+    public Product(String name, Integer price) {
+        this.name = name;
+        this.price = price;
     }
 
     public Long getId() {
@@ -56,6 +61,26 @@ public class Product {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+
+        Product product = (Product) o;
+
+        if (!getName().equals(product.getName())) return false;
+        if (!getPrice().equals(product.getPrice())) return false;
+        return getOrder() != null ? getOrder().equals(product.getOrder()) : product.getOrder() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getPrice().hashCode();
+        result = 31 * result + (getOrder() != null ? getOrder().hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -2,6 +2,11 @@ package com.github.kaydunovdenis.springsupplier.util;
 
 import com.github.kaydunovdenis.springsupplier.entity.Supplier;
 
+/**
+ * Manual mapper is bad.
+ * Need use MupStruct.
+ * @see SupplierMapper
+ */
 public class SupplierConverter {
 
     private SupplierConverter() {
