@@ -1,1 +1,0 @@
-drop table if exists addresses, suppliers, orders, products, recipients, supplier_recipient;

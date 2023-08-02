@@ -1,0 +1,13 @@
+package com.github.kaydunovdenis.financialmanager;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class FinancialManagerApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
